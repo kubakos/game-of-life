@@ -1,4 +1,5 @@
 import numpy as np
+import time
 
 
 class GameOfLife:
@@ -39,12 +40,18 @@ class GameOfLife:
             else:
                 return False
 
-    def play(self, generations):
-        for i in range(generations):
-            pass
-
-    def pause(self):
-        pass
-
     def visualize(self):
         pass
+
+    def start(self, generations):
+        tmp_pop = np.zeros(self.map_size, np.int8)
+        for gen in range(generations):
+            for i in range(self.map_size[0]):
+                for j in range(self.map_size[1]):
+                    if self.is_alive([i, j]) is True:
+                        tmp_pop[i, j] = 1
+                    else:
+                        tmp_pop[i, j] = 0
+            self.population = tmp_pop
+            print(self.get_map())
+            time.sleep(1)
