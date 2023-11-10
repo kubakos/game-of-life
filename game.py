@@ -28,15 +28,20 @@ class GameOfLife:
 
         if self.population[cell[0], cell[1]] == 1:
             if neighbours < 2:
-                self.population[cell[0], cell[1]] = 0
+                return False
             elif neighbours > 3:
-                self.population[cell[0], cell[1]] = 0
+                return False
+            else:
+                return True
         elif self.population[cell[0], cell[1]] == 0:
             if neighbours == 3:
-                self.population[cell[0], cell[1]] = 1
+                return True
+            else:
+                return False
 
-    def play(self):
-        pass
+    def play(self, generations):
+        for i in range(generations):
+            pass
 
     def pause(self):
         pass
