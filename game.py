@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 import time
 import os
 
@@ -45,19 +46,24 @@ class GameOfLife:
             else:
                 return False
 
-    def visualize(self):
-        pass
-
-    def start(self):
+    def run_in_terminal(self):
         tmp_population = np.zeros(self.map_size, np.int8)
         for gen in range(self.generations):
-            for i in range(0, self.map_size[0]-1):
-                for j in range(0, self.map_size[1]-1):
+            for i in range(self.map_size[0] - 1):
+                for j in range(self.map_size[1] - 1):
                     if self.is_alive([i, j]) is True:
                         tmp_population[i, j] = 1
                     else:
                         tmp_population[i, j] = 0
             os.system('clear')
             self.population = tmp_population
-            print(self.get_map())
+            print(self.population)
+            print(gen)
             time.sleep(1/24)
+
+    def plot(self):
+        fig, ax = plt.subplots(self.population)
+        for img in self.population:
+            ax.clear()
+            ax.imshow(img)
+            plt.pause(0.1)
