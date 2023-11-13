@@ -1,24 +1,29 @@
 import numpy as np
 import time
+import os
 
 
 class GameOfLife:
 
     def __init__(self, height=100, width=100):
+        self.generations = 10000
         self.map_size = [height, width]
-        self.population = np.zeros(self.map_size, np.int8)
+        self.population = np.random.randint(0, 2, self.map_size)
 
     def get_map(self):
         return self.population
 
     def set_map_size(self, height, width):
-        self.map_size = [height, width]
+        if isinstance(height, int) & isinstance(width, int):
+            self.map_size = [height, width]
 
     def set_population(self, population):
-        if population == 'random':
-            self.population = np.random.randint(0, 2, self.map_size)
-        elif isinstance(population, np.ndarray):
+        if isinstance(population, np.ndarray):
             self.population = population
+
+    def set_generations(self, gens):
+        if isinstance(gens, int):
+            self.generations = gens
 
     def is_alive(self, cell):
         neighbours = 0
@@ -43,15 +48,16 @@ class GameOfLife:
     def visualize(self):
         pass
 
-    def start(self, generations):
-        tmp_pop = np.zeros(self.map_size, np.int8)
-        for gen in range(generations):
-            for i in range(self.map_size[0]):
-                for j in range(self.map_size[1]):
+    def start(self):
+        tmp_population = np.zeros(self.map_size, np.int8)
+        for gen in range(self.generations):
+            for i in range(0, self.map_size[0]-1):
+                for j in range(0, self.map_size[1]-1):
                     if self.is_alive([i, j]) is True:
-                        tmp_pop[i, j] = 1
+                        tmp_population[i, j] = 1
                     else:
-                        tmp_pop[i, j] = 0
-            self.population = tmp_pop
+                        tmp_population[i, j] = 0
+            os.system('clear')
+            self.population = tmp_population
             print(self.get_map())
-            time.sleep(1)
+            time.sleep(1/24)
