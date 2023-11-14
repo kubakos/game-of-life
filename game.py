@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import time
 import os
 
@@ -9,7 +8,9 @@ class GameOfLife:
     def __init__(self, height=100, width=100):
         self.generations = 10000
         self.map_size = [height, width]
-        self.population = np.random.randint(0, 2, self.map_size)
+        self.population_density = 2
+        self.population = np.random.randint(
+            0, self.population_density, self.map_size)
 
     def get_map(self):
         return self.population
@@ -26,6 +27,9 @@ class GameOfLife:
         if isinstance(gens, int):
             self.generations = gens
 
+    def set_density(self, pd):
+        self.population_density = pd
+
     def is_alive(self, cell):
         neighbours = 0
         for i in range(-1, 2):
@@ -40,13 +44,26 @@ class GameOfLife:
                 return False
             else:
                 return True
-        elif self.population[cell[0], cell[1]] == 0:
+        else:
             if neighbours == 3:
                 return True
             else:
                 return False
 
-    def run_in_terminal(self):
+    def transform_to_str(self, population):
+        transformed = []
+        string = ''
+        for row in population:
+            for cell in row:
+                if cell == 1:
+                    string += '\u2588'
+                else:
+                    string += ' '
+            transformed.append([string])
+            string = ''
+        return transformed
+
+    def start(self):
         tmp_population = np.zeros(self.map_size, np.int8)
         for gen in range(self.generations):
             for i in range(self.map_size[0] - 1):
@@ -57,13 +74,6 @@ class GameOfLife:
                         tmp_population[i, j] = 0
             os.system('clear')
             self.population = tmp_population
-            print(self.population)
+            print(*self.transform_to_str(self.population), sep='\n')
             print(gen)
-            time.sleep(1/24)
-
-    def plot(self):
-        fig, ax = plt.subplots(self.population)
-        for img in self.population:
-            ax.clear()
-            ax.imshow(img)
-            plt.pause(0.1)
+            time.sleep(1/30)

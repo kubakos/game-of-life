@@ -2,5 +2,5 @@
 import game
 
 if __name__ == '__main__':
-    x = game.GameOfLife(30, 30)
-    x.plot()
+    x = game.GameOfLife(30, 50)
+    x.start()
