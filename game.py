@@ -17,6 +17,8 @@ class GameOfLife:
     def set_map_size(self, height, width):
         if isinstance(height, int) & isinstance(width, int):
             self.map_size = [height, width]
+            self.population = np.random.randint(
+                0, self.population_density, self.map_size)
             print("Map size set!")
         else:
             print("Map size couldn't be set!")
@@ -31,6 +33,8 @@ class GameOfLife:
     def set_density(self, pd):
         if isinstance(pd, int):
             self.population_density = pd
+            self.population = np.random.randint(
+                0, self.population_density, self.map_size)
             print("Population density set!")
         else:
             print("Population density couldn't be set!")
@@ -69,7 +73,7 @@ class GameOfLife:
         return transformed
 
     def start(self):
-        tmp_population = np.zeros(self.map_size, np.int8)
+        tmp_population = np.zeros(self.map_size)
         generation = 0
         while True:
             for i in range(self.map_size[0]):
