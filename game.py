@@ -31,9 +31,9 @@ class GameOfLife:
     def set_density(self, pd):
         if isinstance(pd, int):
             self.population_density = pd
-            print("Population density registered!")
+            print("Population density set!")
         else:
-            print("Population density didn't register!")
+            print("Population density couldn't be set!")
 
     def is_alive(self, cell):
         neighbours = 0
