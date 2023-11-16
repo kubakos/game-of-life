@@ -7,37 +7,25 @@ class GameOfLife:
 
     def __init__(self):
         self.map_size = [10, 10]
-        self.population_density = 2
-        self.population = np.random.randint(
-            0, self.population_density, self.map_size)
+        self.population = np.zeros(self.map_size, dtype=np.int8)
 
     def get_map(self):
         return self.population
 
-    def set_map_size(self, height, width):
-        if isinstance(height, int) & isinstance(width, int):
-            self.map_size = [height, width]
-            self.population = np.random.randint(
-                0, self.population_density, self.map_size)
-            print("Map size set!")
-        else:
-            print("Map size couldn't be set!")
+    def set_map_size(self, height=int, width=int):
+        self.map_size = [height, width]
+        self.population = np.zeros(self.map_size, dtype=np.int8)
 
-    def set_population(self, population):
-        if isinstance(population, np.ndarray):
-            self.population = population
-            print("Population map set!")
-        else:
-            print("Population map couldn't be set!")
+    def set_population(self, population=np.ndarray):
+        self.population = population
 
-    def set_density(self, pd):
-        if isinstance(pd, int):
-            self.population_density = pd
-            self.population = np.random.randint(
-                0, self.population_density, self.map_size)
-            print("Population density set!")
+    def set_population_density(self, pd=str):
+        if pd == 'low':
+            self.population = np.random.randint(0, 3, self.map_size)
+        elif pd == 'high':
+            self.population = np.random.randint(0, 2, self.map_size)
         else:
-            print("Population density couldn't be set!")
+            print("Population density is out of range!")
 
     def is_alive(self, cell):
         neighbours = 0
@@ -73,18 +61,21 @@ class GameOfLife:
         return transformed
 
     def start(self):
-        tmp_population = np.zeros(self.map_size)
-        generation = 0
-        while True:
-            for i in range(self.map_size[0]):
-                for j in range(self.map_size[1]):
-                    if self.is_alive([i, j]) is True:
-                        tmp_population[i, j] = 1
-                    else:
-                        tmp_population[i, j] = 0
-            os.system('clear')
-            generation += 1
-            self.population = tmp_population
-            print(*self.transform_to_str(self.population), sep='\n')
-            print(generation)
-            time.sleep(1/30)
+        if isinstance(self.population, np.ndarray):
+            tmp_population = np.zeros(self.map_size, dtype=np.int8)
+            generation = 0
+            while True:
+                for i in range(self.map_size[0]):
+                    for j in range(self.map_size[1]):
+                        if self.is_alive([i, j]) is True:
+                            tmp_population[i, j] = 1
+                        else:
+                            tmp_population[i, j] = 0
+                os.system('clear')
+                generation += 1
+                self.population = tmp_population
+                print(*self.transform_to_str(self.population), sep='\n')
+                print(generation)
+                time.sleep(1/30)
+        else:
+            print("Map's not right!")
