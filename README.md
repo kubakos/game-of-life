@@ -11,7 +11,7 @@ Usage:
 ```
 git clone https://github.com/kubakos/game-of-life.git
 cd game-of-life
-./main.py
+python3 main.py
 ```
 ![](figure-3.png)
 ![](figure-4.png)
