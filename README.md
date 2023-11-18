@@ -1,4 +1,4 @@
-# Command Line Conway's Game of Life
+# Conway's Game of Life
 
 Custom population can be set by the set_population() method with a numpy array, or 
 a random population density can be changed from 'high' to 'low' in the main.py file.
