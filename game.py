@@ -76,6 +76,6 @@ class GameOfLife:
                 self.population = tmp_population
                 print(*self.transform_to_str(self.population), sep='\n')
                 print(generation)
-                time.sleep(1/30)
+                time.sleep(1/60)
         else:
             print("Map's not right!")
