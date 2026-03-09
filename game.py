@@ -56,7 +56,7 @@ class GameOfLife:
                     string += '\u2588'
                 else:
                     string += ' '
-            transformed.append([string])
+            transformed.append(string)
             string = ''
         return transformed
 
