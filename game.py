@@ -21,7 +21,7 @@ class GameOfLife:
 
     def set_population_density(self, pd=str):
         if pd == 'low':
-            self.population = np.random.randint(0, 3, self.map_size)
+            self.population = np.random.choice([0, 1], size=self.map_size, p=[0.8, 0.2]).astype(np.int8)
         elif pd == 'high':
             self.population = np.random.randint(0, 2, self.map_size)
         else:
@@ -62,9 +62,9 @@ class GameOfLife:
 
     def start(self):
         if isinstance(self.population, np.ndarray):
-            tmp_population = np.zeros(self.map_size, dtype=np.int8)
             generation = 0
             while True:
+                tmp_population = np.zeros(self.map_size, dtype=np.int8)
                 for i in range(self.map_size[0]):
                     for j in range(self.map_size[1]):
                         if self.is_alive([i, j]) is True:
